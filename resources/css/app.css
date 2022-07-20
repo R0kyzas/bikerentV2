@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.nav-modify {
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.text-main-color {
+    color: #5c528c;
+}
+
+.bg-main-color {
+    background: #5c528c;
+}
+
+.bg-main-color:hover {
+    background: #673ab7;
+}
+
+/* .text-main-color:hover {
+    border-bottom: 3px solid #5c528c;
+} */
