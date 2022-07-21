@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\BikeController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,34 +18,22 @@ use Inertia\Inertia;
 |
 */
 
-Route::group(['middleware' => ['auth']], function(){
-    Route::get('/');
-});
+Route::group(['middleware' => 'auth', 'verified'], function() {
 
+    Route::get("/redirectAuthenticatedUsers", [RedirectAuthenticatedUsersController::class, "home"])->name('authRender');
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
 });
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified','role:user'])->name('dashboard');
-
-
-// Route::get('/admin', function (){
-//     Route::resource('/bikes', BikeController::class);
-// })->middleware(['verified', 'role:admin']);
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth','verified', 'role:admin'])->group(function(){
     Route::resource('/admin/bikes', BikeController::class);
+    Route::resource('/admin/users', UserController::class);
 });
 
-Route::resource('/admin/users', UserController::class);
+
 
 // Route::prefix('/admin')->group(function(){
 
@@ -55,8 +44,5 @@ Route::resource('/admin/users', UserController::class);
 //     });
 
 // });
-
-// Route::get('/admin/bikes', function () {
-// })->middleware(['auth', 'verified'])->name('admin.dashboard');
 
 require __DIR__.'/auth.php';

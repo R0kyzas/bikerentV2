@@ -2,7 +2,7 @@ import React from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Link, Head } from '@inertiajs/inertia-react';
 
-export default function Welcome(props) {
+export default function GuestDashboard() {
 
 
     return (
@@ -21,12 +21,6 @@ export default function Welcome(props) {
                         </div>
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
-                                {props.auth.user ? (
-                                    <Link href={route('dashboard')} className="text-md text-main-color">
-                                        Dashboard
-                                    </Link>
-                                    ) : (
-                                    <>
                                         <Link href={route('login')} className="text-md text-main-color ">
                                             Log in
                                         </Link>
@@ -34,8 +28,6 @@ export default function Welcome(props) {
                                         <Link href={route('register')} className="ml-4 text-md text-main-color">
                                             Register
                                         </Link>
-                                    </>
-                                )}
                             </div>
                         </div>
                     </div>
