@@ -1,6 +1,6 @@
 import React from "react";
 import { Inertia } from "@inertiajs/inertia";
-import Authenticated from '@/Layouts/Authenticated';
+import Authenticated from '@/Layouts/Admin/Authenticated';
 import { InertiaLink, useForm } from "@inertiajs/inertia-react";
 
 const Create = (props) => {
@@ -18,18 +18,7 @@ const Create = (props) => {
 
     return (
         <Authenticated
-            auth={props.auth}
             errors={props.errors}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                <InertiaLink
-                    href={route("bikes.index")}
-                    className="text-indigo-600 hover:text-indigo-700"
-                >
-                    Bikes
-                </InertiaLink>
-                <span className="font-medium text-indigo-600"> / </span>
-                New bike
-            </h2>}
         >
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

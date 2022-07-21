@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\BikeController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,6 +17,11 @@ use Inertia\Inertia;
 |
 */
 
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('/');
+});
+
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -27,10 +33,18 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified','role:user'])->name('dashboard');
 
 
-Route::resource('admin/bikes', BikeController::class);
+// Route::get('/admin', function (){
+//     Route::resource('/bikes', BikeController::class);
+// })->middleware(['verified', 'role:admin']);
+
+Route::middleware(['auth','verified', 'role:admin'])->group(function(){
+    Route::resource('/admin/bikes', BikeController::class);
+});
+
+Route::resource('/admin/users', UserController::class);
 
 // Route::prefix('/admin')->group(function(){
 

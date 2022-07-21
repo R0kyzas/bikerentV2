@@ -3,6 +3,8 @@ import Authenticated from '@/Layouts/Authenticated';
 import { Head } from '@inertiajs/inertia-react';
 
 export default function Dashboard(props) {
+
+    console.log(props.auth)
     return (
         <Authenticated
             auth={props.auth}

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBikeRequest;
 use App\Models\Bike;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 
 class BikeController extends Controller
@@ -29,7 +28,7 @@ class BikeController extends Controller
             $request->validated()
         );
 
-        return Redirect::route('bikes.index')->with('success', 'Bike created successfully');;
+        return Redirect::route('bikes.index')->with('success', 'Bike created successfully');
     }
 
     public function edit(Bike $bike)

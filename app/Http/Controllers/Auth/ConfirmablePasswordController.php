@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,7 @@ class ConfirmablePasswordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
         if (! Auth::guard('web')->validate([
             'email' => $request->user()->email,

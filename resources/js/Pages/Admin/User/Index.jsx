@@ -3,7 +3,7 @@ import Authenticated from '@/Layouts/Admin/Authenticated';
 import { InertiaLink, usePage } from '@inertiajs/inertia-react';
 
 const Index = (props) => {
-    const { bikes,flash } = usePage().props;
+    const { users,flash } = usePage().props;
     const [showNotification, setshowNotification] = useState(true);
 
     useEffect(()=>{
@@ -48,9 +48,9 @@ const Index = (props) => {
                                     <div className="flex items-center">
                                         <InertiaLink
                                             className="px-6 py-2 text-white bg-main-color rounded-md focus:outline-none"
-                                            href={route("bikes.create")}
+                                            href={route("users.create")}
                                         >
-                                            Create Bike
+                                            Create User
                                         </InertiaLink>
                                     </div>
                                 </div>
@@ -61,52 +61,37 @@ const Index = (props) => {
                                                 ID
                                             </th>
                                             <th scope="col" className="py-3 px-6">
-                                                Title
+                                                Name
                                             </th>
                                             <th scope="col" className="py-3 px-6">
-                                                IDN
-                                            </th>
-                                            <th scope="col" className="py-3 px-6">
-                                                Address
-                                            </th>
-                                            <th scope="col" className="py-3 px-6">
-                                                City
-                                            </th>
-                                            <th scope="col" className="py-3 px-6">
-                                                Action
+                                                Email
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {bikes?.map((item, i) => (
+                                        {users?.map((item, i) => (
                                             <tr key={i} className="bg-white border-b">
                                                 <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                                     {item.id}
                                                 </th>
                                                 <td className="py-4 px-6">
-                                                    {item.title}
+                                                    {item.name}
                                                 </td>
                                                 <td className="py-4 px-6">
-                                                    {item.idn}
-                                                </td>
-                                                <td className="py-4 px-6">
-                                                    {item.address}
-                                                </td>
-                                                <td className="py-4 px-6">
-                                                    {item.city}
+                                                    {item.email}
                                                 </td>
                                                 <td className="py-4 px-6">
                                                     <InertiaLink
                                                         tabIndex="1"
                                                         className="font-medium text-blue-600"
-                                                        href={route("bikes.edit", item.id)}
+                                                        href={route("users.edit", item.id)}
                                                     >
                                                         Edit
                                                     </InertiaLink>
                                                 </td>
                                             </tr>
                                         ))}
-                                        {bikes?.length === 0 && (
+                                        {users?.length === 0 && (
                                             <tr className="bg-white border-b">
                                                 <th scope="row" 
                                                     className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
