@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\BikeController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use Illuminate\Foundation\Application;
@@ -31,6 +33,8 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth','verified', 'role:admin'])->group(function(){
     Route::resource('/admin/bikes', BikeController::class);
     Route::resource('/admin/users', UserController::class);
+    Route::resource('/admin/categories', CategoryController::class);
+    Route::resource('/admin/cities', CityController::class);
 });
 
 

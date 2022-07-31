@@ -28,6 +28,12 @@ export default function Authenticated({ children }) {
                                 <NavLink href={route('bikes.create')} active={route().current('bikes.create')}>
                                     Orders
                                 </NavLink>
+                                <NavLink href={route('categories.index')} active={route().current('categories.index')}>
+                                    Categories
+                                </NavLink>
+                                <NavLink href={route('cities.index')} active={route().current('cities.index')}>
+                                    Cities
+                                </NavLink>
                             </div>
                         </div>
 

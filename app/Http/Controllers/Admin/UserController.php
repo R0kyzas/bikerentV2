@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -24,11 +27,24 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request)
     {
-        User::create(
-            $request->validated()
-        );
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => ['required', Rules\Password::defaults()],
+            'password_confirmation' => ['same:password', Rules\Password::defaults()],
+        ]);
 
-        return Redirect::route('user.index')->with('success', 'User created successfully');
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $user->assignRole('user');
+
+        event(new Registered($user));
+
+        return Redirect::route('users.index')->with('success', 'User created successfully');
     }
 
     public function edit(User $user)
@@ -44,9 +60,12 @@ class UserController extends Controller
 
     public function update(StoreUserRequest $request, User $user)
     {
+        if(!empty($request->input('password'))){
+            $user->password = Hash::make($request->input('password'));
+        }
         $user->update($request->validated());
 
-        return Redirect::route('users.index')->with('success', 'User created successfully');
+        return Redirect::route('users.index')->with('success', 'User edited successfully');
     }
 
     public function destroy(User $user)

@@ -1,14 +1,20 @@
-import React from "react";
+import React, {useState} from "react";
+import { InertiaLink, useForm,usePage } from "@inertiajs/inertia-react";
 import { Inertia } from "@inertiajs/inertia";
 import Authenticated from '@/Layouts/Admin/Authenticated';
-import { InertiaLink, useForm } from "@inertiajs/inertia-react";
+import CurrencyInput from 'react-currency-input-field';
+import Select from 'react-select'
 
 const Create = (props) => {
+
+    const { categories, cities } = usePage().props;
     const { data, setData, errors, post } = useForm({
         title: "",
         idn: "",
-        address: "",
-        city: "",
+        price: 0,
+        category_id: '',
+        city_id: '',
+        active: false,
     });
 
     function handleSubmit(e) {
@@ -16,6 +22,19 @@ const Create = (props) => {
         post(route("bikes.store"));
     }
 
+    const handleCategory = (e) => {
+        const categoryId = e.target.value;
+        data.category_id = categoryId;
+        setData(data.category_id);
+    }
+
+    const handleCity = (e) => {
+        const cityId = e.target.value;
+        data.city_id = cityId;
+        setData(data.city_id);
+    }
+
+    console.log(categories)
     return (
         <Authenticated
             errors={props.errors}
@@ -43,6 +62,22 @@ const Create = (props) => {
                                         </span>
                                     </div>
                                     <div className="mb-4">
+                                        <label className="">Description</label>
+                                        <input
+                                            type="text"
+                                            className="w-full px-4 py-2"
+                                            label="Description"
+                                            name="description"
+                                            value={data.description}
+                                            onChange={(e) =>
+                                                setData("description", e.target.value)
+                                            }
+                                        />
+                                        <span className="text-red-600">
+                                            {errors.description}
+                                        </span>
+                                    </div>
+                                    <div className="mb-4">
                                         <label className="">IDN</label>
                                             <input
                                                 type="text"
@@ -50,8 +85,8 @@ const Create = (props) => {
                                                 label="IDN"
                                                 name="idn"
                                                 value={data.idn}
-                                                onChange={(e) =>
-                                                    setData("idn", e.target.value)
+                                                onChange={(e) => 
+                                                    setData('idn', e.target.value)
                                                 }
                                             />
                                             <span className="text-red-600">
@@ -59,36 +94,61 @@ const Create = (props) => {
                                             </span>
                                     </div>
                                     <div className="mb-4">
-                                        <label className="">Address</label>
-                                            <input
-                                                type="text"
-                                                className="w-full px-4 py-2"
-                                                label="Address"
-                                                name="address"
-                                                value={data.address}
-                                                onChange={(e) =>
-                                                    setData("address", e.target.value)
-                                                }
-                                            />
+                                        <label className="">Category</label>
+                                            <select name="category_id" 
+                                            onChange={(e)=> handleCategory(e)}>
+                                                <option value="">Select Category</option>
+                                                {categories.map((item, index) => (
+                                                    item.active === 1 ? 
+                                                        <option key={index} value={item.id}>{item.title}</option>
+                                                        :
+                                                        ""
+                                                ))}
+                                            </select>
                                             <span className="text-red-600">
-                                                {errors.address}
+                                                {errors.category_id}
                                             </span>
                                     </div>
                                     <div className="mb-4">
                                         <label className="">City</label>
-                                            <input
-                                                type="text"
-                                                className="w-full px-4 py-2"
-                                                label="City"
-                                                name="city"
-                                                value={data.city}
-                                                onChange={(e) =>
-                                                    setData("city", e.target.value)
-                                                }
-                                            />
+                                            <select name="city_id" 
+                                            onChange={(e)=> handleCity(e)}>
+                                                <option value="">Select Category</option>
+                                                {cities.map((item, index) => (
+                                                    item.active === 1 ? 
+                                                        <option key={index} value={item.id}>{item.city}, {item.address}</option>
+                                                        :
+                                                        ""
+                                                ))}
+                                            </select>
                                             <span className="text-red-600">
-                                                {errors.city}
+                                                {errors.city_id}
                                             </span>
+                                    </div>
+                                    <div className="mb-4">
+                                        <label className="">Price</label>
+                                        <CurrencyInput
+                                            name="price"
+                                            defaultValue={0}
+                                            value={data.price}
+                                            decimalsLimit={2}
+                                            onValueChange={(value, name) =>
+                                                setData(name, value)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="mb-4">
+                                        <label className="">Active</label>
+                                            <input
+                                                type="checkbox"
+                                                label="Active"
+                                                name="active"
+                                                value={data.active}
+                                                checked={data.active}
+                                                onChange={(e) =>
+                                                    setData("active", e.target.type === 'checkbox' ? e.target.checked : e.target.value)
+                                                }
+                                        />
                                     </div>
                                     </div>
                                         <div className="mt-4">

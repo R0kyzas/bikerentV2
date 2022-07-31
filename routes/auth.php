@@ -5,17 +5,17 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\HomeController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Guest\HomeController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::middleware('guest')->group(function () {
 
-    Route::get('/', [HomeController::class, 'home'])->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');

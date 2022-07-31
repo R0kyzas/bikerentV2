@@ -4,11 +4,11 @@ import { InertiaLink, usePage, useForm } from "@inertiajs/inertia-react";
 import Authenticated from '@/Layouts/Admin/Authenticated';
 
 const Edit = (props) => {
-    const { user } = usePage().props;
+    const { city } = usePage().props;
     const { data, setData, put, errors } = useForm({
-        name: user.name || "",
-        email: user.email || "",
-        password: "",
+        city: city.city,
+        address: city.address,
+        active: city.active,
     });
     const [show, setShow] = useState(false);
 
@@ -17,12 +17,11 @@ const Edit = (props) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(data.password);
-        put(route("users.update", user.id));
+        put(route("cities.update", city.id));
     }
 
     function destroy() {
-        Inertia.delete(route("users.destroy", user.id));  
+        Inertia.delete(route("cities.destroy", city.id));  
     }
 
     return (
@@ -30,59 +29,56 @@ const Edit = (props) => {
             errors={props.errors}
         >
 
-<div className="py-12">
+            <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-14 bg-white">
                             <form name="createForm" onSubmit={handleSubmit}>
                                 <div className="flex flex-col">
                                     <div className="mb-4">
-                                        <label className="">Name</label>
+                                        <label className="">City</label>
                                         <input
                                             type="text"
                                             className="w-full px-4 py-2"
-                                            label="Name"
-                                            name="name"
-                                            value={data.name}
+                                            label="City"
+                                            name="city"
+                                            value={data.city}
                                             onChange={(e) =>
-                                                setData("name", e.target.value)
+                                                setData("city", e.target.value)
                                             }
                                         />
                                         <span className="text-red-600">
-                                            {errors.name}
+                                            {errors.city}
                                         </span>
                                     </div>
                                     <div className="mb-4">
-                                        <label className="">Email</label>
+                                        <label className="">Address</label>
                                         <input
-                                            type="email"
+                                            type="text"
                                             className="w-full px-4 py-2"
-                                            label="Email"
-                                            name="email"
-                                            value={data.email}
+                                            label="Address"
+                                            name="address"
+                                            value={data.address}
                                             onChange={(e) =>
-                                                setData("email", e.target.value)
+                                                setData("address", e.target.value)
                                             }
                                         />
                                         <span className="text-red-600">
-                                            {errors.email}
+                                            {errors.address}
                                         </span>
                                     </div>
                                     <div className="mb-4">
-                                        <label className="">Password</label>
+                                        <label className="">Active</label>
                                         <input
-                                            type="password"
-                                            className="w-full px-4 py-2"
-                                            label="Password"
-                                            name="password"
-                                            value={data.password}
+                                            type="checkbox"
+                                            label="Active"
+                                            name="active"
+                                            value={data.active}
+                                            checked={data.active}
                                             onChange={(e) =>
-                                                setData("password", e.target.value)
+                                                setData("active", e.target.type === 'checkbox' ? e.target.checked : e.target.value)
                                             }
                                         />
-                                        <span className="text-red-600">
-                                            {errors.password}
-                                        </span>
                                     </div>
                                 </div>
                                 <div className="flex justify-between">

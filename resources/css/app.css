@@ -25,3 +25,9 @@
 /* .text-main-color:hover {
     border-bottom: 3px solid #5c528c;
 } */
+
+.page-numbers li.active {
+    --tw-bg-opacity: 1;
+    background-color: #673ab7;
+    color: white;
+}

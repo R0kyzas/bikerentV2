@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bikes', function (Blueprint $table) {
+        Schema::create('cities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->references('id')->on('categories');
-            $table->foreignId('city_id')->references('id')->on('cities');
-            $table->string('title', 15);
-            $table->text('description');
-            $table->string('idn', 12);
-            $table->float('price',8,2)->default(0);
+            $table->string('city', 15);
+            $table->string('address', 15);
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bikes');
+        Schema::dropIfExists('cities');
     }
 };

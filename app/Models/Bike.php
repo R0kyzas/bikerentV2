@@ -11,7 +11,21 @@ class Bike extends Model
     protected $fillable = [
         'title',
         'idn',
-        'address',
-        'city',
+        'category_id',
+        'city_id',
+        'description',
+        'price',
+        'active',
     ];
+
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class,'category_id');
+    }
+
+    public function city()
+    {
+        return $this->hasOne(City::class, 'city_id');
+    }
 }

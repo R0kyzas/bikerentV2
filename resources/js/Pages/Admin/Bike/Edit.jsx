@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import { Inertia } from "@inertiajs/inertia";
 import { InertiaLink, usePage, useForm } from "@inertiajs/inertia-react";
+import CurrencyInput from 'react-currency-input-field';
 import Authenticated from '@/Layouts/Admin/Authenticated';
 
 const Edit = (props) => {
-    const { bike } = usePage().props;
+    const { bike,categories } = usePage().props;
     const { data, setData, put, errors } = useForm({
-        title: bike.title || "",
-        idn: bike.idn || "",
-        address: bike.address || "",
-        city: bike.city || "",
+        title: bike.title,
+        idn: bike.idn,
+        description: bike.description,
+        price: bike.price,
+        category_id: bike.category_id,
+        category_title: bike.category_title,
+        active: bike.active,
     });
     const [show, setShow] = useState(false);
 
@@ -21,9 +25,16 @@ const Edit = (props) => {
         put(route("bikes.update", bike.id));
     }
 
+    const handleCategory = (e) => {
+        const categoryId = e.target.value;
+        data.category_id = categoryId;
+        setData(data.category_id);
+    }
+
     function destroy() {
         Inertia.delete(route("bikes.destroy", bike.id));  
     }
+
 
     return (
         <Authenticated
@@ -53,6 +64,22 @@ const Edit = (props) => {
                                         </span>
                                     </div>
                                     <div className="mb-4">
+                                        <label className="">Description</label>
+                                        <input
+                                            type="text"
+                                            className="w-full px-4 py-2"
+                                            label="Description"
+                                            name="description"
+                                            value={data.description}
+                                            onChange={(e) =>
+                                                setData("description", e.target.value)
+                                            }
+                                        />
+                                        <span className="text-red-600">
+                                            {errors.description}
+                                        </span>
+                                    </div>
+                                    <div className="mb-4">
                                         <label className="">IDN</label>
                                         <input
                                             type="text"
@@ -69,36 +96,45 @@ const Edit = (props) => {
                                         </span>
                                     </div>
                                     <div className="mb-4">
-                                        <label className="">Address</label>
-                                        <input
-                                            type="text"
-                                            className="w-full px-4 py-2"
-                                            label="Address"
-                                            name="address"
-                                            value={data.address}
-                                            onChange={(e) =>
-                                                setData("address", e.target.value)
+                                        <label className="">Price</label>
+                                        <CurrencyInput
+                                            name="price"
+                                            value={data.price}
+                                            decimalsLimit={2}
+                                            onValueChange={(e) =>
+                                                setData('price', e.target.value)
                                             }
                                         />
-                                        <span className="text-red-600">
-                                            {errors.address}
-                                        </span>
                                     </div>
                                     <div className="mb-4">
-                                        <label className="">City</label>
-                                        <input
-                                            type="text"
-                                            className="w-full px-4 py-2"
-                                            label="City"
-                                            name="city"
-                                            value={data.city}
-                                            onChange={(e) =>
-                                                setData("city", e.target.value)
-                                            }
+                                    <label className="">Category</label>
+                                            <select name="category_id"
+                                                onChange={(e)=> handleCategory(e)}
+                                            >
+                                                <option value={data.category_id}>{data.category_title}</option>
+                                                {categories.map((item, index) => (
+                                                    item.active === 1 && item.title !== data.category_title ? 
+                                                        <option key={index} value={item.id}>{item.title}</option>
+                                                        :
+                                                        ""
+                                                ))}
+                                            </select>
+                                            <span className="text-red-600">
+                                                {errors.category_id}
+                                            </span>
+                                    </div>
+                                    <div className="mb-4">
+                                        <label className="">Active</label>
+                                            <input
+                                                type="checkbox"
+                                                label="Active"
+                                                name="active"
+                                                value={data.active}
+                                                checked={data.active}
+                                                onChange={(e) =>
+                                                    setData("active", e.target.type === 'checkbox' ? e.target.checked : e.target.value)
+                                                }
                                         />
-                                        <span className="text-red-600">
-                                            {errors.city}
-                                        </span>
                                     </div>
                                 </div>
                                 <div className="flex justify-between">

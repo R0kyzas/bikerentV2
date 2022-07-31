@@ -3,7 +3,7 @@ import Authenticated from '@/Layouts/Admin/Authenticated';
 import { InertiaLink, usePage } from '@inertiajs/inertia-react';
 
 const Index = (props) => {
-    const { bikes, categories,cities, flash } = usePage().props;
+    const { categories,flash } = usePage().props;
     const [showNotification, setshowNotification] = useState(true);
 
     useEffect(()=>{
@@ -11,6 +11,8 @@ const Index = (props) => {
             setshowNotification(false);
         }, 3500);
     },[])
+
+    console.log(categories);
     return(
         <Authenticated
             errors={props.errors}
@@ -47,9 +49,9 @@ const Index = (props) => {
                                     <div className="flex items-center">
                                         <InertiaLink
                                             className="px-6 py-2 text-white bg-main-color rounded-md focus:outline-none"
-                                            href={route("bikes.create")}
+                                            href={route("categories.create")}
                                         >
-                                            Create Bike
+                                            Create Category
                                         </InertiaLink>
                                     </div>
                                 </div>
@@ -63,22 +65,6 @@ const Index = (props) => {
                                                 Title
                                             </th>
                                             <th scope="col" className="py-3 px-6">
-                                                IDN
-                                            </th>
-                                            
-                                            <th scope="col" className="py-3 px-6">
-                                                Description
-                                            </th>
-                                            <th scope="col" className="py-3 px-6">
-                                                Price
-                                            </th>
-                                            <th scope="col" className="py-3 px-6">
-                                                Category
-                                            </th>
-                                            <th scope="col" className="py-3 px-6">
-                                                Address
-                                            </th>
-                                            <th scope="col" className="py-3 px-6">
                                                 Active
                                             </th>
                                             <th scope="col" className="py-3 px-6">
@@ -87,7 +73,7 @@ const Index = (props) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {bikes?.map((item, i) => (
+                                        {categories?.map((item, i) => (
                                             <tr key={i} className="bg-white border-b">
                                                 <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                                     {item.id}
@@ -96,47 +82,20 @@ const Index = (props) => {
                                                     {item.title}
                                                 </td>
                                                 <td className="py-4 px-6">
-                                                    {item.idn}
-                                                </td>
-                                                <td className="py-4 px-6">
-                                                    {item.description}
-                                                </td>
-                                                <td className="py-4 px-6">
-                                                    {item.price}
-                                                </td>
-                                                {categories?.map((categoryItem) => (
-                                                    categoryItem.id === item.category_id ?
-                                                    <td className="py-4 px-6">
-                                                        {categoryItem.title}
-                                                    </td>
-                                                    :
-                                                    ""
-                                                    ))
-                                                }
-                                                {cities?.map((cityItem) => (
-                                                    cityItem.id === item.city_id ?
-                                                    <td className="py-4 px-6">
-                                                        {cityItem.city}, {cityItem.address}
-                                                    </td>
-                                                    :
-                                                    ""
-                                                    ))
-                                                }
-                                                <td className="py-4 px-6">
                                                     <input type="checkbox" name="Active" checked={item.active === 0 ? 0 : 1}  readOnly/>
                                                 </td>
                                                 <td className="py-4 px-6">
                                                     <InertiaLink
                                                         tabIndex="1"
                                                         className="font-medium text-blue-600"
-                                                        href={route("bikes.edit", item.id)}
+                                                        href={route("categories.edit", item.id)}
                                                     >
                                                         Edit
                                                     </InertiaLink>
                                                 </td>
                                             </tr>
                                         ))}
-                                        {bikes?.length === 0 && (
+                                        {categories?.length === 0 && (
                                             <tr className="bg-white border-b">
                                                 <th scope="row" 
                                                     className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
