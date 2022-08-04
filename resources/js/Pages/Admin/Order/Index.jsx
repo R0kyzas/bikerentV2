@@ -1,18 +1,32 @@
 import React, {useEffect, useState} from 'react';
 import Authenticated from '@/Layouts/Admin/Authenticated';
-import { usePage, useForm } from '@inertiajs/inertia-react';
+import { usePage, useForm, InertiaLink } from '@inertiajs/inertia-react';
 import OrderStatusHandle from '@/Components/OrderStatusHandle';
 import SuccessNotification from '@/Components/SuccessNotification';
 import ErrorNotification from '@/Components/ErrorNotification';
 import CancelReasonModal from '@/Components/CancelReasonModal';
 import FilterById from '@/Pages/FilterById';
+import { Inertia } from '@inertiajs/inertia';
+import Button from '@/Components/Button';
 
 const Index = (props) => {
     const { orders, flash } = usePage().props;
-    const { data, setData, post, errors } = useForm({
-        id: "",
-        cancel_reason: "",
-    });
+    const { data, setData, post, errors } = useForm(orders);
+
+    const [query, setQuery] = useState('');
+
+    const search = (e) => {
+        e.preventDefault();
+        Inertia.get(
+            route(route().current()),
+            {search: query},
+        );
+    }
+
+    const resetSearch = (e) => {
+        e.preventDefault();
+        Inertia.get(route('admin.orders.index'));
+    }
 
     const [showNotification, setshowNotification] = useState(true);
 
@@ -36,16 +50,30 @@ const Index = (props) => {
         if(data.cancel_reason.length >= 4 && data.cancel_reason.length <= 255) handleClose();
     }
 
-    function handleIputValue(e) {
-        const inputValueId = e.target.value;
-        data.id = inputValueId;
-        setData(data.id);
-    }
+    // function handleSearchSubmit(e) {
+    //     e.preventDefault();
+    //     get(route("admin.orders.index"))
+    // }
 
-    function handleFilterSubmit(e) {
-        e.preventDefault();
-        console.log(data.id);
-    }
+    // function handleFilterId(id) {
+    //    const filteredData = orders.filter((item) => {
+    //     const getId = `${item.id}`;
+    //         if(getId.includes(id)){
+    //             return item;
+    //         }
+    //     });
+    //     setData(filteredData)
+    // }
+
+    // function handleFilterStatus(status) {
+    //     const filteredData = orders.filter((item) => {
+    //      const getStatus = `${item.status}`;
+    //         if(getStatus.toLowerCase().includes(status.toLowerCase())){
+    //              return item;
+    //          }
+    //      });
+    //      setData(filteredData)
+    //  }
     return(
         <Authenticated
             errors={props.errors}
@@ -62,10 +90,30 @@ const Index = (props) => {
                                     <div className="bg-white">
                                         <label htmlFor="table-search" className="sr-only">Search</label>
                                         <div className="relative mt-1">
-                                            <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                                                <svg className="w-5 h-5 text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
+                                            <div className="flex items-center">
+                                            <input 
+                                                type="search" 
+                                                className="block p-2 pl-5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                                name="search"
+                                                value={query}
+                                                id="search"
+                                                autoComplete="search"
+                                                placeholder={`Search here...`}
+                                                onChange={(e) => setQuery(e.target.value)}
+                                                />
+                                                <Button 
+                                                    className="ml-3"
+                                                    onClick={(e)=> search(e)}
+                                                >
+                                                    Search
+                                                </Button>
+                                                <InertiaLink
+                                                    className="inline-flex items-center ml-3 px-4 py-2 border border-transparent rounded-md bg-main-color font-semibold text-xs text-white uppercase tracking-widest active: transition ease-in-out duration-150"
+                                                    href={route("admin.orders.index")}
+                                                >
+                                                    Reset
+                                                </InertiaLink>
                                             </div>
-                                            <input type="text" id="table-search" className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Search for items" />
                                         </div>
                                     </div>
                                 </div>
@@ -73,8 +121,7 @@ const Index = (props) => {
                                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                         <tr>
                                             <th scope="col" className="py-3 px-6 text-center">
-                                            <FilterById title={'ID'} value={data} handleIputValue={handleIputValue} handleFilterSubmit={handleFilterSubmit} name={'searchById'}/>
-                                            
+                                                ID
                                             </th>
                                             <th scope="col" className="py-3 px-6 text-center">
                                                 Bike ID

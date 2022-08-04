@@ -47,6 +47,7 @@ Route::middleware(['auth','verified', 'role:admin'])->group(function(){
             Route::match(['get','post'], 'confirm/{order}', [OrderController::class, 'confirm'])->name('orders.confirm');
             Route::match(['get','post'], 'cancel/{order}', [OrderController::class, 'cancel'])->name('orders.cancel');
             Route::match(['get','post'], 'complete/{order}', [OrderController::class, 'complete'])->name('orders.complete');
+            Route::match(['get','post'], '/?search={id}', [OrderController::class, 'filterById'])->name('orders.filterById');
             
             });
         });

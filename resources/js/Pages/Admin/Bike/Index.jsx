@@ -8,11 +8,6 @@ import FilterById from '@/Pages/FilterById';
 const Index = (props) => {
     const { bikes, bike, flash } = usePage().props;
 
-    const { data, setData, put, errors } = useForm({
-        id: bike.id,
-    });
-
-
     const [showNotification, setshowNotification] = useState(true);
 
     useEffect(() => {
@@ -27,22 +22,22 @@ const Index = (props) => {
     }, []);
 
 
-    function handleIdSubmit(e) {
-        e.preventDefault();
-        put(route("admin.bikes.update", bike.id));
-    }
+    // function handleIdSubmit(e) {
+    //     e.preventDefault();
+    //     put(route("admin.bikes.update", bike.id));
+    // }
 
-    function handleIputValue(e) {
-        const inputValueId = e.target.value;
-        data.id = inputValueId;
-        setData(data.id);
-    }
+    // function handleIputValue(e) {
+    //     const inputValueId = e.target.value;
+    //     data.id = inputValueId;
+    //     setData(data.id);
+    // }
 
-    const handleCity = (e) => {
-        const cityId = e.target.value;
-        data.city_id = cityId;
-        setData(data.city_id);
-    }
+    // const handleCity = (e) => {
+    //     const cityId = e.target.value;
+    //     data.city_id = cityId;
+    //     setData(data.city_id);
+    // }
 
     return(
         <Authenticated
@@ -79,19 +74,10 @@ const Index = (props) => {
                                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                         <tr>
                                             <th scope="col" className="py-3 px-6">
-                                                <FilterById title={'ID'} value={data.id} handleIputValue={handleIputValue} name={searchById}/>
-                                                {/* <InertiaLink
-                                                    className="group hidden md:inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
-                                                    href={route("admin.bikes.create")}
-                                                >
-                                                    ID
-                                                <svg class="flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                                </svg>
-                                                </InertiaLink> */}
+                                                ID
                                             </th>
                                             <th scope="col" className="py-3 px-6">
-                                                <FilterById title={'Title'}/>
+                                                Title
                                             </th>
                                             <th scope="col" className="py-3 px-6">
                                                 IDN
