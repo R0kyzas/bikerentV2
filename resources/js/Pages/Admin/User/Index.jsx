@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import Authenticated from '@/Layouts/Admin/Authenticated';
 import { InertiaLink, usePage } from '@inertiajs/inertia-react';
+import SuccessNotification from '@/Components/SuccessNotification';
+import ErrorNotification from '@/Components/ErrorNotification';
 
 const Index = (props) => {
     const { users,flash } = usePage().props;
@@ -16,19 +18,8 @@ const Index = (props) => {
         <Authenticated
             errors={props.errors}
         >
-            {showNotification && flash.success && (
-                <div className="h-full flex justify-center py-6">
-                    <div className="flex max-w-xs w-full mt-4 mr-4 bg-white rounded shadow p-4">
-                        <div className='mr-4'>
-                            <img src="/images/success-message.png" alt="success" className="w-6 h-6 text-green-600"/>
-                        </div>
-                        <div className='flex-1 text-gray-800'>
-                            {flash.success}
-                        </div>
-                    </div>
-                    
-                </div>
-            )}
+            <SuccessNotification showNotification={showNotification} success={flash.success} />
+            <ErrorNotification showNotification={showNotification} error={flash.error} />
             
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -48,7 +39,7 @@ const Index = (props) => {
                                     <div className="flex items-center">
                                         <InertiaLink
                                             className="px-6 py-2 text-white bg-main-color rounded-md focus:outline-none"
-                                            href={route("users.create")}
+                                            href={route("admin.users.create")}
                                         >
                                             Create User
                                         </InertiaLink>
@@ -84,7 +75,7 @@ const Index = (props) => {
                                                     <InertiaLink
                                                         tabIndex="1"
                                                         className="font-medium text-blue-600"
-                                                        href={route("users.edit", item.id)}
+                                                        href={route("admin.users.edit", item.id)}
                                                     >
                                                         Edit
                                                     </InertiaLink>

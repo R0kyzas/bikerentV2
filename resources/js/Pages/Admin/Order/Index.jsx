@@ -1,24 +1,51 @@
 import React, {useEffect, useState} from 'react';
 import Authenticated from '@/Layouts/Admin/Authenticated';
-import { InertiaLink, usePage } from '@inertiajs/inertia-react';
+import { usePage, useForm } from '@inertiajs/inertia-react';
+import OrderStatusHandle from '@/Components/OrderStatusHandle';
 import SuccessNotification from '@/Components/SuccessNotification';
 import ErrorNotification from '@/Components/ErrorNotification';
+import CancelReasonModal from '@/Components/CancelReasonModal';
+import FilterById from '@/Pages/FilterById';
 
 const Index = (props) => {
-    const { cities,flash } = usePage().props;
+    const { orders, flash } = usePage().props;
+    const { data, setData, post, errors } = useForm({
+        id: "",
+        cancel_reason: "",
+    });
+
     const [showNotification, setshowNotification] = useState(true);
-    
-    useEffect(() => {
-        const notificationTimer = setTimeout(()=>{
+
+    const [show, setShow] = useState(false);
+
+    const [cancelID, setCancelID] = useState('');
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    useEffect(()=>{
+        setTimeout(()=>{
             setshowNotification(false);
         }, 3500);
+    },[])
+    
 
-        return () => {
-            clearTimeout(notificationTimer);
-            setshowNotification(true);
-        };
-    }, []);
+    function handleSubmit(e) {
+        e.preventDefault();
+        post(route("admin.orders.cancel", cancelID));
+        if(data.cancel_reason.length >= 4 && data.cancel_reason.length <= 255) handleClose();
+    }
 
+    function handleIputValue(e) {
+        const inputValueId = e.target.value;
+        data.id = inputValueId;
+        setData(data.id);
+    }
+
+    function handleFilterSubmit(e) {
+        e.preventDefault();
+        console.log(data.id);
+    }
     return(
         <Authenticated
             errors={props.errors}
@@ -41,62 +68,61 @@ const Index = (props) => {
                                             <input type="text" id="table-search" className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Search for items" />
                                         </div>
                                     </div>
-                                    <div className="flex items-center">
-                                        <InertiaLink
-                                            className="px-6 py-2 text-white bg-main-color rounded-md focus:outline-none"
-                                            href={route("admin.cities.create")}
-                                        >
-                                            Create City
-                                        </InertiaLink>
-                                    </div>
                                 </div>
                                 <table className="w-full text-sm text-left text-gray-500">
                                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                         <tr>
-                                            <th scope="col" className="py-3 px-6">
-                                                ID
+                                            <th scope="col" className="py-3 px-6 text-center">
+                                            <FilterById title={'ID'} value={data} handleIputValue={handleIputValue} handleFilterSubmit={handleFilterSubmit} name={'searchById'}/>
+                                            
                                             </th>
-                                            <th scope="col" className="py-3 px-6">
-                                                City
+                                            <th scope="col" className="py-3 px-6 text-center">
+                                                Bike ID
                                             </th>
-                                            <th scope="col" className="py-3 px-6">
-                                                Address
+                                            <th scope="col" className="py-3 px-6 text-center">
+                                                User
                                             </th>
-                                            <th scope="col" className="py-3 px-6">
-                                                Active
+                                            <th scope="col" className="py-3 px-6 text-center">
+                                                Rent days
                                             </th>
-                                            <th scope="col" className="py-3 px-6">
+                                            <th scope="col" className="py-3 px-6 text-center">
+                                                Quantity
+                                            </th>
+                                            <th scope="col" className="py-3 px-6 text-center">
+                                                Status
+                                            </th>
+                                            <th scope="col" className="py-3 px-6 text-center">
                                                 Action
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {cities?.map((item, i) => (
+                                        {orders?.map((item, i) => (
                                             <tr key={i} className="bg-white border-b">
-                                                <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                                                <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap text-center">
                                                     {item.id}
                                                 </th>
-                                                <td className="py-4 px-6">
-                                                    {item.city}
+                                                <td className="py-4 px-6 text-center">
+                                                    {item.bike?.id}
                                                 </td>
-                                                <td className="py-4 px-6">
-                                                    {item.address}
+                                                <td className="py-4 px-6 text-center">
+                                                    {item.user?.email}
                                                 </td>
-                                                <td className="py-4 px-6">
-                                                    <input type="checkbox" name="Active" checked={item.active === 0 ? 0 : 1}  readOnly/>
+                                                <td className="py-4 px-6 text-center">
+                                                    {item.rent_days}
                                                 </td>
-                                                <td className="py-4 px-6">
-                                                    <InertiaLink
-                                                        tabIndex="1"
-                                                        className="font-medium text-blue-600"
-                                                        href={route("admin.cities.edit", item.id)}
-                                                    >
-                                                        Edit
-                                                    </InertiaLink>
+                                                <td className="py-4 px-6 text-center">
+                                                    {item.quantity}
+                                                </td>
+                                                <td className="py-4 px-6 text-center">
+                                                    {item.status}
+                                                </td>
+                                                <td className="py-4 px-6 text-center">
+                                                    <OrderStatusHandle status={item.status} itemId={item.id} cancelReason={item.cancel_reason} handleShow={handleShow} setCancelID={setCancelID} item={item}/>
                                                 </td>
                                             </tr>
                                         ))}
-                                        {cities?.length === 0 && (
+                                        {orders?.length === 0 && (
                                             <tr className="bg-white border-b">
                                                 <th scope="row" 
                                                     className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
@@ -111,6 +137,15 @@ const Index = (props) => {
                             </div>
                         </div>
                     </div>
+                    <CancelReasonModal 
+                        handleSubmit={handleSubmit} 
+                        handleClose={handleClose} 
+                        show={show} 
+                        dataValue={data.cancel_reason} 
+                        errors={errors.cancel_reason} 
+                        name={'cancel_reason'}
+                        setData={setData}
+                    />
                 </div>
             </div>
         </Authenticated>

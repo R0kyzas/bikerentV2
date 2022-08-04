@@ -13,7 +13,7 @@ const Create = (props) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        post(route("users.store"));
+        post(route("admin.users.store"));
     }
 
     return (

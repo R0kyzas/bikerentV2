@@ -5,7 +5,7 @@ import CurrencyInput from 'react-currency-input-field';
 import Authenticated from '@/Layouts/Admin/Authenticated';
 
 const Edit = (props) => {
-    const { bike,categories } = usePage().props;
+    const { bike,categories, cities } = usePage().props;
     const { data, setData, put, errors } = useForm({
         title: bike.title,
         idn: bike.idn,
@@ -13,6 +13,9 @@ const Edit = (props) => {
         price: bike.price,
         category_id: bike.category_id,
         category_title: bike.category_title,
+        city_id: bike.city_id,
+        city: bike.city,
+        address: bike.address,
         active: bike.active,
     });
     const [show, setShow] = useState(false);
@@ -22,7 +25,7 @@ const Edit = (props) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        put(route("bikes.update", bike.id));
+        put(route("admin.bikes.update", bike.id));
     }
 
     const handleCategory = (e) => {
@@ -31,8 +34,14 @@ const Edit = (props) => {
         setData(data.category_id);
     }
 
+    const handleCity = (e) => {
+        const cityId = e.target.value;
+        data.city_id = cityId;
+        setData(data.city_id);
+    }
+
     function destroy() {
-        Inertia.delete(route("bikes.destroy", bike.id));  
+        Inertia.delete(route("admin.bikes.destroy", bike.id));  
     }
 
 
@@ -121,6 +130,23 @@ const Edit = (props) => {
                                             </select>
                                             <span className="text-red-600">
                                                 {errors.category_id}
+                                            </span>
+                                    </div>
+                                    <div className="mb-4">
+                                    <label className="">City</label>
+                                            <select name="city_id"
+                                                onChange={(e)=> handleCity(e)}
+                                            >
+                                                <option value={data.city_id}>{data.city}, {data.address}</option>
+                                                {cities.map((item, index) => (
+                                                    item.active === 1 && item.city !== data.city && item.address !== data.address ? 
+                                                        <option key={index} value={item.id}>{item.city}, {item.address}</option>
+                                                        :
+                                                        ""
+                                                ))}
+                                            </select>
+                                            <span className="text-red-600">
+                                                {errors.city_id}
                                             </span>
                                     </div>
                                     <div className="mb-4">

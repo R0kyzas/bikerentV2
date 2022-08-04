@@ -12,28 +12,6 @@ const Filter = () => {
     return (
         <>
             <form class="hidden lg:block">
-            {/* <ul role="list" class="text-sm font-medium text-gray-900 space-y-4 pb-6 border-b border-gray-200">
-              <li>
-                <a href="#"> Totes </a>
-              </li>
-
-              <li>
-                <a href="#"> Backpacks </a>
-              </li>
-
-              <li>
-                <a href="#"> Travel Bags </a>
-              </li>
-
-              <li>
-                <a href="#"> Hip Bags </a>
-              </li>
-
-              <li>
-                <a href="#"> Laptop Sleeves </a>
-              </li>
-            </ul> */}
-
             <div className="border-b border-gray-200 pb-6">
               <h3 className="-my-3 flow-root">
                 <button type="button" className="py-3 bg-white w-full flex items-center justify-between text-sm text-gray-400 hover:text-gray-500" aria-controls="filter-section-0" aria-expanded="false">

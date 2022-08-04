@@ -12,7 +12,7 @@ const Create = (props) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        post(route("cities.store"));
+        post(route("admin.cities.store"));
     }
 
     return (

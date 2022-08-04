@@ -29,7 +29,7 @@ class CategoryController extends Controller
             $request->validated()
         );
 
-        return Redirect::route('categories.index')->with('success', 'Category created successfully');
+        return Redirect::route('admin.categories.index')->with('success', 'Category created successfully');
     }
 
     public function edit(Category $category)
@@ -47,13 +47,13 @@ class CategoryController extends Controller
     {
         $category->update($request->validated());
 
-        return Redirect::route('categories.index')->with('success', 'Category created successfully');
+        return Redirect::route('admin.categories.index')->with('success', 'Category updated successfully');
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
 
-        return Redirect::route('categories.index')->with('success', 'Category deleted successfully');
+        return Redirect::route('admin.categories.index')->with('success', 'Category deleted successfully');
     }
 }

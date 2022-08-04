@@ -28,7 +28,7 @@ class CityController extends Controller
             $request->validated()
         );
 
-        return Redirect::route('cities.index')->with('success', 'City created successfully');
+        return Redirect::route('admin.cities.index')->with('success', 'City created successfully');
     }
 
     public function edit(City $city)
@@ -47,13 +47,13 @@ class CityController extends Controller
     {
         $city->update($request->validated());
 
-        return Redirect::route('cities.index')->with('success', 'City created successfully');
+        return Redirect::route('admin.cities.index')->with('success', 'City updated successfully');
     }
 
     public function destroy(City $city)
     {
         $city->delete();
 
-        return Redirect::route('cities.index')->with('success', 'City deleted successfully');
+        return Redirect::route('admin.cities.index')->with('success', 'City deleted successfully');
     }
 }

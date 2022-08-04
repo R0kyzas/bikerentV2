@@ -16,11 +16,11 @@ const Edit = (props) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        put(route("categories.update", category.id));
+        put(route("admin.categories.update", category.id));
     }
 
     function destroy() {
-        Inertia.delete(route("categories.destroy", category.id));  
+        Inertia.delete(route("admin.categories.destroy", category.id));  
     }
 
     return (

@@ -22,6 +22,10 @@
     background: #673ab7;
 }
 
+.border-main-color {
+    border-color: #673ab7;
+}
+
 /* .text-main-color:hover {
     border-bottom: 3px solid #5c528c;
 } */

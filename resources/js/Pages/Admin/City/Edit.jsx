@@ -17,11 +17,11 @@ const Edit = (props) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        put(route("cities.update", city.id));
+        put(route("admin.cities.update", city.id));
     }
 
     function destroy() {
-        Inertia.delete(route("cities.destroy", city.id));  
+        Inertia.delete(route("admin.cities.destroy", city.id));  
     }
 
     return (

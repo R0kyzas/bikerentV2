@@ -44,7 +44,7 @@ class UserController extends Controller
 
         event(new Registered($user));
 
-        return Redirect::route('users.index')->with('success', 'User created successfully');
+        return Redirect::route('admin.users.index')->with('success', 'User created successfully');
     }
 
     public function edit(User $user)
@@ -65,13 +65,13 @@ class UserController extends Controller
         }
         $user->update($request->validated());
 
-        return Redirect::route('users.index')->with('success', 'User edited successfully');
+        return Redirect::route('admin.users.index')->with('success', 'User edited successfully');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
 
-        return Redirect::route('users.index')->with('success', 'User deleted successfully');
+        return Redirect::route('admin.users.index')->with('success', 'User deleted successfully');
     }
 }

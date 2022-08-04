@@ -1,9 +1,7 @@
-import React, {useState} from "react";
-import { InertiaLink, useForm,usePage } from "@inertiajs/inertia-react";
-import { Inertia } from "@inertiajs/inertia";
+import React from "react";
+import {useForm,usePage } from "@inertiajs/inertia-react";
 import Authenticated from '@/Layouts/Admin/Authenticated';
 import CurrencyInput from 'react-currency-input-field';
-import Select from 'react-select'
 
 const Create = (props) => {
 
@@ -19,7 +17,7 @@ const Create = (props) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        post(route("bikes.store"));
+        post(route("admin.bikes.store"));
     }
 
     const handleCategory = (e) => {
@@ -34,7 +32,6 @@ const Create = (props) => {
         setData(data.city_id);
     }
 
-    console.log(categories)
     return (
         <Authenticated
             errors={props.errors}

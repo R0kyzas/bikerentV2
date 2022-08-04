@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "react-currency-input-field": "^3.6.4",
+        "react-icons": "^4.4.0",
         "react-modal": "^3.15.1",
         "react-select": "^5.4.0"
     }

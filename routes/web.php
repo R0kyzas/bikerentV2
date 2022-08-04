@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\BikeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use Illuminate\Foundation\Application;
@@ -28,13 +29,36 @@ Route::group(['middleware' => 'auth', 'verified'], function() {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'role:user'])->name('dashboard');
 
 Route::middleware(['auth','verified', 'role:admin'])->group(function(){
-    Route::resource('/admin/bikes', BikeController::class);
-    Route::resource('/admin/users', UserController::class);
-    Route::resource('/admin/categories', CategoryController::class);
-    Route::resource('/admin/cities', CityController::class);
+    
+    Route::prefix('admin')->group(function () {
+        
+        Route::name('admin.')->group(function (){
+            
+            Route::resource('bikes', BikeController::class);
+            Route::resource('users', UserController::class);
+            Route::resource('categories', CategoryController::class);
+            Route::resource('cities', CityController::class);
+            Route::resource('orders', OrderController::class);
+
+            Route::prefix('orders')->group(function () {
+            Route::match(['get','post'], 'confirm/{order}', [OrderController::class, 'confirm'])->name('orders.confirm');
+            Route::match(['get','post'], 'cancel/{order}', [OrderController::class, 'cancel'])->name('orders.cancel');
+            Route::match(['get','post'], 'complete/{order}', [OrderController::class, 'complete'])->name('orders.complete');
+            
+            });
+        });
+    });
+    // Route::resource('/admin/bikes', BikeController::class);
+    // Route::resource('/admin/users', UserController::class);
+    // Route::resource('/admin/categories', CategoryController::class);
+    // Route::resource('/admin/cities', CityController::class);
+    // Route::resource('/admin/orders', OrderController::class);
+    // Route::match(['get','post'], 'admin/orders/confirm/{order}', [OrderController::class, 'confirm'])->name('admin.orders.confirm');
+    // Route::match(['get','post'], 'admin/orders/cancel/{order}', [OrderController::class, 'cancel'])->name('admin.orders.cancel');
+    // Route::match(['get','post'], 'admin/orders/complete/{order}', [OrderController::class, 'complete'])->name('admin.orders.complete');
 });
 
 

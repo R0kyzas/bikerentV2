@@ -21,11 +21,16 @@ class Bike extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class,'category_id');
+        return $this->belongsTo(Category::class);
     }
 
     public function city()
     {
-        return $this->hasOne(City::class, 'city_id');
+        return $this->belongsTo(City::class);
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
 }

@@ -11,10 +11,12 @@ class RedirectAuthenticatedUsersController extends Controller
     {
         
         if($request->user()->hasRole('admin')){
-            return redirect('/admin/bikes');
+            return redirect('/admin/orders');
         }
         elseif($request->user()->hasRole('user')){
             return redirect('/dashboard');
         }
+
+        return abort(404);
     }
 }

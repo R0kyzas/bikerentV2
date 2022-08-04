@@ -19,19 +19,19 @@ export default function Authenticated({ children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink href={route('bikes.index')} active={route().current('bikes.index')}>
-                                    Bikes 
-                                </NavLink>
-                                <NavLink href={route('users.index')} active={route().current('users.index')}>
-                                    Users
-                                </NavLink>
-                                <NavLink href={route('bikes.create')} active={route().current('bikes.create')}>
+                                <NavLink href={route('admin.orders.index')} active={route().current('admin.orders.index')}>
                                     Orders
                                 </NavLink>
-                                <NavLink href={route('categories.index')} active={route().current('categories.index')}>
+                                <NavLink href={route('admin.bikes.index')} active={route().current('admin.bikes.index')}>
+                                    Bikes 
+                                </NavLink>
+                                <NavLink href={route('admin.users.index')} active={route().current('admin.users.index')}>
+                                    Users
+                                </NavLink>
+                                <NavLink href={route('admin.categories.index')} active={route().current('admin.categories.index')}>
                                     Categories
                                 </NavLink>
-                                <NavLink href={route('cities.index')} active={route().current('cities.index')}>
+                                <NavLink href={route('admin.cities.index')} active={route().current('admin.cities.index')}>
                                     Cities
                                 </NavLink>
                             </div>
