@@ -15,6 +15,7 @@ class Bike extends Model
         'city_id',
         'description',
         'price',
+        'in_stock',
         'active',
     ];
 

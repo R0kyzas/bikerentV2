@@ -2,10 +2,6 @@ import React, {useState} from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Link, usePage } from '@inertiajs/inertia-react';
 import PagePagination from '@/Components/PagePagination';
-import Filter from './Filter';
-import FilterSortBy from './FilterSortBy';
-import FilterByCategories from './FilterByCategories';
-import FilterByCities from './FilterByCities';
 
 export default function GuestDashboard(props) {
     // const { bikes } = usePage().props;
@@ -25,13 +21,23 @@ export default function GuestDashboard(props) {
                             </div>
                             <div className="flex">
                                 <div className="shrink-0 flex items-center">
-                                            <Link href={route('login')} className="text-md text-main-color ">
+                                  {props.auth.user ? (
+                                      <Link href={route('dashboard')} className="text-sm text-gray-700 underline">
+                                        Profile
+                                      </Link>
+                                  ) : (
+                                    <>
+                                      <Link href={route('login')} className="text-md text-main-color ">
                                                 Log in
                                             </Link>
 
                                             <Link href={route('register')} className="ml-4 text-md text-main-color">
                                                 Register
                                             </Link>
+                                    </>
+                                  )
+                                  
+                                  }
                                 </div>
                             </div>
                         </div>
@@ -43,18 +49,6 @@ export default function GuestDashboard(props) {
                         <div className="shrink-0 flex items-center">
                           <Link href={route('login')} className="font-semibold text-xl leading-tight text-main-color ">
                             Bikes
-                          </Link>
-
-                          <Link href={route('register')} className="ml-10 font-semibold text-xl leading-tight text-main-color">
-                            Contact us
-                          </Link>
-                          
-                          <Link href={route('register')} className="ml-10 font-semibold text-xl leading-tight text-main-color">
-                            Reviews
-                          </Link>
-
-                          <Link href={route('register')} className="ml-10 font-semibold text-xl leading-tight text-main-color">
-                            Offers
                           </Link>
                         </div>
                     </div>
@@ -89,13 +83,13 @@ export default function GuestDashboard(props) {
     <main class="mx-auto px-4 sm:px-6 lg:px-8">
       <div class="relative z-10 flex items-center justify-between pt-8 pb-6 border-b border-gray-200">
         <div className='flex'>
-          <FilterByCategories />
-          <FilterByCities />
+          {/* <FilterByCategories />
+          <FilterByCities /> */}
         </div>
 
         <div class="flex items-center">
           <div class="relative flex justify-end inline-block text-left">
-            <FilterSortBy />
+            {/* <FilterSortBy /> */}
           </div>
               
           <span className="text-sm font-medium text-gray-700 hover:text-gray-900 p-2 -m-2 ml-5">Bicycles quantity: 10</span>

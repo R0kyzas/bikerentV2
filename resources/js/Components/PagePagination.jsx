@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { usePage } from "@inertiajs/inertia-react";
+import { usePage, Link } from "@inertiajs/inertia-react";
 
 const renderData = (data) => {
     // const { bikes } = usePage().props;
@@ -26,7 +26,10 @@ const renderData = (data) => {
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-3xl font-bold text-gray-900 ">{item.price}€ / Day</span>
-                            <a href="#" class="text-white bg-main-color focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Rent bike</a>
+                            <Link href={route('rent', item.id)} className="text-white bg-main-color focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                Details
+                            </Link>
+                            {/* <a href="#" class="text-white bg-main-color focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Rent bike</a> */}
                         </div>
                     </div>
                 </div>

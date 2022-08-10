@@ -3,10 +3,9 @@ import Authenticated from '@/Layouts/Admin/Authenticated';
 import { InertiaLink, usePage, useForm } from '@inertiajs/inertia-react';
 import SuccessNotification from '@/Components/SuccessNotification';
 import ErrorNotification from '@/Components/ErrorNotification';
-import FilterById from '@/Pages/FilterById';
 
 const Index = (props) => {
-    const { bikes, bike, flash } = usePage().props;
+    const { bikes, flash } = usePage().props;
 
     const [showNotification, setshowNotification] = useState(true);
 
@@ -20,24 +19,6 @@ const Index = (props) => {
             setshowNotification(true);
         };
     }, []);
-
-
-    // function handleIdSubmit(e) {
-    //     e.preventDefault();
-    //     put(route("admin.bikes.update", bike.id));
-    // }
-
-    // function handleIputValue(e) {
-    //     const inputValueId = e.target.value;
-    //     data.id = inputValueId;
-    //     setData(data.id);
-    // }
-
-    // const handleCity = (e) => {
-    //     const cityId = e.target.value;
-    //     data.city_id = cityId;
-    //     setData(data.city_id);
-    // }
 
     return(
         <Authenticated

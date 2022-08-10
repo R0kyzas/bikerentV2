@@ -112,9 +112,27 @@ export default function Authenticated({ auth, header, children }) {
             </nav>
 
             {header && (
-                <header className="bg-white shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
-                </header>
+                <div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+                    <div className="flex">
+                        <div className="shrink-0 flex items-center">
+                        <Link href={route('login')} className="font-semibold text-xl leading-tight text-main-color ">
+                            Bikes
+                        </Link>
+
+                        <Link href={route('register')} className="ml-10 font-semibold text-xl leading-tight text-main-color">
+                            Contact us
+                        </Link>
+                        
+                        <Link href={route('register')} className="ml-10 font-semibold text-xl leading-tight text-main-color">
+                            Reviews
+                        </Link>
+
+                        <Link href={route('register')} className="ml-10 font-semibold text-xl leading-tight text-main-color">
+                            Offers
+                        </Link>
+                        </div>
+                    </div>
+                </div>
             )}
 
             <main>{children}</main>

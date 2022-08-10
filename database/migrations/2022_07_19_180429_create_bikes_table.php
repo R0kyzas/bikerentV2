@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('idn', 12);
             $table->float('price',8,2)->default(0);
+            $table->tinyInteger('in_stock')->default(0);
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

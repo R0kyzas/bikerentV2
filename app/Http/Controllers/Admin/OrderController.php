@@ -27,7 +27,7 @@ class OrderController extends Controller
 
         return Inertia::render('Admin/Order/Index', [
             'orders' => Order::query()->when($search, fn($query) =>
-                $query->where('status', 'LIKE', "%{$search}%"))
+                $query->where('id', 'LIKE', "%{$search}%"))
                 // ->where('status', 'Like', "smt"))
                 ->with('user', 'bike')
                 ->orderByRaw("FIELD(status, 'Accepted', 'Pending', 'Completed', 'Canceled')")

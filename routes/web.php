@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
+use App\Http\Controllers\Guest\HomeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,6 +31,10 @@ Route::group(['middleware' => 'auth', 'verified'], function() {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified', 'role:user'])->name('dashboard');
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('rent/{id}', [HomeController::class, 'showRent'])->name('rent');
 
 Route::middleware(['auth','verified', 'role:admin'])->group(function(){
     

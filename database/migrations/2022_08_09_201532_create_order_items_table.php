@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('order_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users');
-            $table->string('order_nr', 255);
-            $table->float('total_price',8,2)->default(0);
-            $table->string('status', 15)->default('Pending');
-            $table->string('cancel_reason', 255)->nullable(true);
+            $table->foreignId('bike_id')->references('id')->on('bikes');
+            $table->foreignId('order_id')->references('id')->on('orders');
+            $table->integer('quantity');
+            $table->float('unit_price',8,2)->default(0);
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('order_items');
     }
 };

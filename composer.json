@@ -9,6 +9,7 @@
         "doctrine/dbal": "^3.3",
         "getsolaris/laravel-make-service": "^1.1",
         "guzzlehttp/guzzle": "^7.2",
+        "haruncpi/laravel-id-generator": "^1.1",
         "inertiajs/inertia-laravel": "^0.5.4",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^2.8",
