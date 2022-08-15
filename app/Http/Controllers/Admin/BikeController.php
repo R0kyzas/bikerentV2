@@ -42,6 +42,7 @@ class BikeController extends Controller
             'category_id' => $request->category_id,
             'city_id' => $request->city_id,
             'active' => $request->active,
+            'in_stock' => $request->in_stock,
         ]);
         
 
@@ -66,6 +67,7 @@ class BikeController extends Controller
                 'city' => $bike->city->city,
                 'address' => $bike->city->address,
                 'active' => $bike->active,
+                'in_stock' => $bike->in_stock,
             ],
             'categories' => $categories,
             'cities' => $cities,

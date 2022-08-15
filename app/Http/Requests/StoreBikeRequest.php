@@ -31,6 +31,7 @@ class StoreBikeRequest extends FormRequest
             'category_id' => 'required',
             'city_id' => 'required',
             'active' => 'nullable',
+            'in_stock' => 'required',
         ];
     }
 }

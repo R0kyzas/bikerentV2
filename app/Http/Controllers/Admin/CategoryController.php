@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Models\Category;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 

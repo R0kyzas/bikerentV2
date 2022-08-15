@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\BikeController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\CheckoutController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
@@ -11,9 +9,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\BasketController;
-use App\Http\Controllers\Guest\HomeController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::middleware('guest')->group(function () {
 
@@ -44,6 +40,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
 
     Route::get('checkout', [BasketController::class, 'getBasket'])->name('checkout');
+    Route::get('checkout/{id}', [BasketController::class, 'removeItem'])->name('remove.item');
 
     Route::post('basket', [BasketController::class, 'addItem'])->name('basket.add.item');
 

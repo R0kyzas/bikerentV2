@@ -15,15 +15,9 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'bike_id', 'total_price', 'rent_days', 'quantity', 'user_id',
+        'total_price', 'order_nr', 'user_id',
         'status', 'cancel_reason',
     ];
-
-
-    public function bike()
-    {
-        return $this->belongsTo(Bike::class);
-    }
 
     public function user()
     {
@@ -33,5 +27,10 @@ class Order extends Model
     public function order_items()
     {
         return $this->hasMany(OrderItem::class, 'order_id');
+    }
+
+    public function bike()
+    {
+        return $this->belongsTo(Bike::class);
     }
 }

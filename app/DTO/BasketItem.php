@@ -15,13 +15,14 @@ class BasketItem implements \JsonSerializable
     private int $unitPrice;
 
     private int $quantity;
+    
 
     public function __construct(
         int $productId,
         string $title,
         string $idn,
         int $unitPrice,
-        int $quantity
+        int $quantity,
     ) {
         $this->productId = $productId;
         $this->title = $title;

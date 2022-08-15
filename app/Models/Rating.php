@@ -5,21 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderItem extends Model
+class Rating extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'bike_id', 'order_id', 'quantity', 'unit_price',
+        'comment', 'status', 'rating', 'user_id', 'bike_id'
     ];
 
-    public function order()
-    {
-        return $this->belongsTo(Order::class);
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 
-    public function bike()
-    {
+    public function bike(){
         return $this->belongsTo(Bike::class);
     }
 }

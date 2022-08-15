@@ -7,9 +7,8 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 use App\Http\Controllers\Guest\HomeController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\User\HomeController as UserHomeController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +27,11 @@ Route::group(['middleware' => 'auth', 'verified'], function() {
 
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified', 'role:user'])->name('dashboard');
+Route::group(['middleware' => 'auth', 'verified', 'role:user'], function(){
+    Route::get('/dashboard', [UserHomeController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/review/{id}', [UserHomeController::class, 'showReview'])->name('show.review');
+    Route::post('/dashboard/review/{id}', [UserHomeController::class, 'store'])->name('user.review.store');
+});
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -57,26 +58,6 @@ Route::middleware(['auth','verified', 'role:admin'])->group(function(){
             });
         });
     });
-    // Route::resource('/admin/bikes', BikeController::class);
-    // Route::resource('/admin/users', UserController::class);
-    // Route::resource('/admin/categories', CategoryController::class);
-    // Route::resource('/admin/cities', CityController::class);
-    // Route::resource('/admin/orders', OrderController::class);
-    // Route::match(['get','post'], 'admin/orders/confirm/{order}', [OrderController::class, 'confirm'])->name('admin.orders.confirm');
-    // Route::match(['get','post'], 'admin/orders/cancel/{order}', [OrderController::class, 'cancel'])->name('admin.orders.cancel');
-    // Route::match(['get','post'], 'admin/orders/complete/{order}', [OrderController::class, 'complete'])->name('admin.orders.complete');
 });
-
-
-
-// Route::prefix('/admin')->group(function(){
-
-//     // Route::resource('admin/bikes', [BikeController::class, 'list']);
-
-//     Route::prefix('/bikes')->group(function(){
-//         Route::resource('/', [BikeController::class, 'list']);
-//     });
-
-// });
 
 require __DIR__.'/auth.php';

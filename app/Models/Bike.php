@@ -17,6 +17,7 @@ class Bike extends Model
         'price',
         'in_stock',
         'active',
+        'sku'
     ];
 
 
@@ -30,8 +31,8 @@ class Bike extends Model
         return $this->belongsTo(City::class);
     }
 
-    public function order()
+    public function ratings()
     {
-        return $this->belongsTo(Order::class);
+        return $this->hasMany(Rating::class);
     }
 }

@@ -15,7 +15,7 @@ class BasketManager
         $this->basketSessionStorage = $basketSessionStorage;
     }
 
-    private function kiekKuriPridesim($quantity,  Bike $bike){
+    private function howMuchAdd($quantity,  Bike $bike){
         $basket = $this->getBasket();
 
         if($basket->hasItem($bike->id))
@@ -34,9 +34,8 @@ class BasketManager
     public function addItem(Bike $bike, int $quantity = 1): void
     {
         $basket = $this->getBasket();
-        //dabartinis quantity && quantity kurį norėsim įdėti
-        //$basket->getItem($bike->id) === 
-        if($bike->in_stock < $this->kiekKuriPridesim($quantity, $bike)){ 
+
+        if($bike->in_stock < $this->howMuchAdd($quantity, $bike)){ 
             throw new \Exception('Nepakanka kiekio');
         }
         if ($basket->hasItem($bike->id)) {
@@ -48,18 +47,14 @@ class BasketManager
                 $bike->title,
                 $bike->idn,
                 $bike->price,
-                $quantity // cia is inputo value
+                $quantity,
             );
 
             $basket->addItem($basketItem);
         }
 
-        
-        //Jeigu būčiau sylius saugočiau į DB
         $this->basketSessionStorage->store($basket);
         $this->recalculate();
-//        Session::put('basket', $basket);
-
     }
 
     public function removeItem(int $productId): void
@@ -69,13 +64,8 @@ class BasketManager
         if ($basket->hasItem($productId)) {
             $basket->removeItem($productId);
             $this->recalculate();
-//            Session::put('basket', $basket);
             $this->basketSessionStorage->store($basket);
         }
-//        else {
-//            throw new \InvalidArgumentException('Invalid product id Provided');
-//        }
-        // else jei norim galim mesti exception
     }
 
     public function changeQuantity(int $productId, int $quantity): void
@@ -86,7 +76,6 @@ class BasketManager
             $basketItem = $basket->getItem($productId);
             $basketItem->setQuantity($quantity);
             $this->recalculate();
-//            Session::put('basket', $basket);
             $this->basketSessionStorage->store($basket);
         }
     }
@@ -100,7 +89,6 @@ class BasketManager
             $total += $item->getQuantity() * $item->getUnitPrice();
         }
 
-        //apply discount
 
         $basket->setTotalPrice($total);
         $this->basketSessionStorage->store($basket);
@@ -108,17 +96,13 @@ class BasketManager
 
     public function getBasket(): Basket
     {
-        //Jeigu būčiau sylius traukčiau iš DB
         $basket = $this->basketSessionStorage->get();
-//        Session::get('basket');
 
         return $basket ?: new Basket();
     }
 
     public function clear(): void
     {
-        //jeigu būčiau sylius trinčiau record iš db
-        //Session::remove('basket');
         $this->basketSessionStorage->clear();
     }
 }

@@ -1,11 +1,10 @@
-import React from 'react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/inertia-react';
+import React from "react";
+import ApplicationLogo from "@/Components/ApplicationLogo";
+import NavLink from "@/Components/NavLink";
+import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
+import { Link } from "@inertiajs/inertia-react";
 
 export default function Authenticated({ children }) {
-
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white shadow">
@@ -19,19 +18,44 @@ export default function Authenticated({ children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink href={route('admin.orders.index')} active={route().current('admin.orders.index')}>
+                                <NavLink
+                                    href={route("admin.orders.index")}
+                                    active={route().current(
+                                        "admin.orders.index"
+                                    )}
+                                >
                                     Orders
                                 </NavLink>
-                                <NavLink href={route('admin.bikes.index')} active={route().current('admin.bikes.index')}>
-                                    Bikes 
+                                <NavLink
+                                    href={route("admin.bikes.index")}
+                                    active={route().current(
+                                        "admin.bikes.index"
+                                    )}
+                                >
+                                    Bikes
                                 </NavLink>
-                                <NavLink href={route('admin.users.index')} active={route().current('admin.users.index')}>
+                                <NavLink
+                                    href={route("admin.users.index")}
+                                    active={route().current(
+                                        "admin.users.index"
+                                    )}
+                                >
                                     Users
                                 </NavLink>
-                                <NavLink href={route('admin.categories.index')} active={route().current('admin.categories.index')}>
+                                <NavLink
+                                    href={route("admin.categories.index")}
+                                    active={route().current(
+                                        "admin.categories.index"
+                                    )}
+                                >
                                     Categories
                                 </NavLink>
-                                <NavLink href={route('admin.cities.index')} active={route().current('admin.cities.index')}>
+                                <NavLink
+                                    href={route("admin.cities.index")}
+                                    active={route().current(
+                                        "admin.cities.index"
+                                    )}
+                                >
                                     Cities
                                 </NavLink>
                             </div>
@@ -39,12 +63,15 @@ export default function Authenticated({ children }) {
 
                         <div className="sm:flex sm:items-center sm:ml-6">
                             <div className="ml-3 relative">
-                                <ResponsiveNavLink method="post" href={route('logout')} as="button">
+                                <ResponsiveNavLink
+                                    method="post"
+                                    href={route("logout")}
+                                    as="button"
+                                >
                                     Log Out
                                 </ResponsiveNavLink>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </nav>

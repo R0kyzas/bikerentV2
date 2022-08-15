@@ -35,3 +35,17 @@
     background-color: #673ab7;
     color: white;
 }
+
+input[type="radio"]{
+    display: none;
+}
+
+.star {
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    display: block;
+    float: left;
+    color: gray;
+    font-size: 24px;
+}
