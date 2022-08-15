@@ -2,11 +2,13 @@
 2. Run xampp.
 3. Commands and things to do order that you'll need to run this project:
     3.1 git clone this repository (https://github.com/R0kyzas/bikerentV2.git)
-    3.2 composer install
+    3.2 composer install or composer update
     3.3 npm install
-    3.4 Copy .env.examlpe and rename it to .env
-    3.5 php artisan serve
-    3.6 npm run dev
+    3.4 adjust env according to yourself
+    3.5 create database in DBeaver or other app
+    3.6 php artisan migrate --seed
+    3.7 php artisan serve
+    3.8 npm run dev
 
 4. In your browser write http://localhost:8000/login or http://localhost:8000/
     4.1 Login as admin:
