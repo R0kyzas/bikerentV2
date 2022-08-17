@@ -24,8 +24,8 @@ class StoreBikeRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'idn' => 'required',
+            'title' => 'required|between:3,37',
+            'idn' => 'required|min:12|max:12',
             'description' => 'required',
             'price' => 'required',
             'category_id' => 'required',

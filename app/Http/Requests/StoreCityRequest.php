@@ -24,8 +24,8 @@ class StoreCityRequest extends FormRequest
     public function rules()
     {
         return [
-            'city' => 'required',
-            'address' => 'required',
+            'city' => 'required|between:3,15',
+            'address' => 'required|between:3,15',
             'active' => 'nullable',
         ];
     }

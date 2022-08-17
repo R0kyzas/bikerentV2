@@ -25,8 +25,6 @@ class StoreOrderRequest extends FormRequest
     {
         return [
             'total_price' => 'required',
-            'rent_days' => 'required',
-            'quantity' => 'required',
         ];
     }
 }
